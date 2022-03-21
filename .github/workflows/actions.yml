@@ -6,6 +6,12 @@ on:
       - master
       - 'feature/*'
       - 'feature/**'
+      - '!feature/featC'
+    tags:
+      - v1.*
+      - release
+    paths-ignore:
+      - 'docs/**'
   #repository_dispatch:
   #  types: [build]
   #schedule:

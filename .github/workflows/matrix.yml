@@ -8,7 +8,20 @@ jobs:
         os: [macos-latest, ubuntu-latest, windows-latest]
         greeting_string: ["hello world","Hi","Good day!"]
         node_version: [6,8,10]
+        include:
+          - os: ubuntu-latest
+            node_version: 8
+            greeting_string: "hello world"
+            is_ubuntu_8: "true"
+        exclude:
+          - os: ubuntu-latest
+            node_version: 6
+          - os: macos-latest
+            node_version: 10
+            greeting_string: "Hi"
     runs-on: ${{ matrix.os }}
+    env:
+      IS_UBUNTU_8: ${{ matrix.is_ubuntu_8 }}
     steps:
       - name: Log Greeting
         run: echo "${{ matrix.greeting_string }}"
@@ -18,4 +31,6 @@ jobs:
         with:
           node-version: ${{ matrix.node_version }}
       - name: Log node version
-        run: node -v
+        run: |
+          node -v
+          echo $IS_UBUNTU_8
